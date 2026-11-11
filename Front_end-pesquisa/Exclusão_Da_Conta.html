@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Excluir Conta - FarmaSync</title>
+
+    <!-- Ícones e Fontes -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+
+    <style>
+        /* ==========================================================================
+           RESET & CONFIGURAÇÕES GLOBAIS
+           ========================================================================== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Roboto', sans-serif;
+        }
+
+        body {
+            background-color: #f4f6f8;
+            color: #1f2d2b;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* ==========================================================================
+           CABEÇALHO
+           ========================================================================== */
+        .cabecalho {
+            background-color: #ffffff;
+            border-bottom: 1px solid #e2e8f0;
+            box-shadow: 0 2px 12px rgba(0, 60, 55, 0.06);
+            padding: 15px 40px;
+        }
+
+        .logo {
+            width: 60px;
+            height: 60px;
+            object-fit: contain;
+            border-radius: 50%;
+            background: white;
+            padding: 4px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.06);
+            display: block;
+        }
+
+        /* ==========================================================================
+           ÁREA PRINCIPAL & CARTÃO
+           ========================================================================== */
+        .principal {
+            width: 90%;
+            max-width: 650px;
+            margin: 40px auto;
+            flex: 1;
+        }
+
+        .cartao {
+            background-color: #ffffff;
+            border: 1px solid #e2e8f0;
+            border-radius: 16px;
+            padding: 40px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+        }
+
+        /* Ícone de Alerta */
+        .icone-alerta {
+            width: 64px;
+            height: 64px;
+            margin: 0 auto 20px;
+            border-radius: 50%;
+            background-color: #fef3c7;
+            color: #d97706;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 28px;
+            border: 2px solid #f59e0b;
+        }
+
+        /* Títulos */
+        .cartao h1 {
+            color: #0f172a;
+            text-align: center;
+            font-size: 26px;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+
+        .subtitulo {
+            color: #64748b;
+            text-align: center;
+            font-size: 15px;
+            line-height: 1.5;
+            margin-bottom: 25px;
+        }
+
+        /* Caixa de Aviso */
+        .aviso {
+            background-color: #fffbeb;
+            border-left: 4px solid #f59e0b;
+            border-radius: 10px;
+            padding: 16px;
+            margin-bottom: 24px;
+        }
+
+        .aviso h2 {
+            color: #b45309;
+            font-size: 15px;
+            font-weight: 700;
+            margin-bottom: 6px;
+        }
+
+        .aviso p {
+            color: #92400e;
+            font-size: 14px;
+            line-height: 1.5;
+        }
+
+        /* Lista de Consequências */
+        .consequencias {
+            margin-bottom: 24px;
+        }
+
+        .consequencias h2 {
+            color: #0f172a;
+            font-size: 15px;
+            font-weight: 700;
+            margin-bottom: 12px;
+        }
+
+        .consequencias ul {
+            list-style: none;
+        }
+
+        .consequencias li {
+            padding: 8px 0;
+            border-bottom: 1px solid #f1f5f9;
+            color: #475569;
+            font-size: 14px;
+        }
+
+        .consequencias li::before {
+            content: "•";
+            color: #006C63;
+            font-size: 18px;
+            font-weight: bold;
+            margin-right: 10px;
+        }
+
+        /* Confirmação (Checkbox) */
+        .confirmacao {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            background-color: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 10px;
+            padding: 14px;
+            margin-bottom: 24px;
+        }
+
+        .confirmacao input {
+            margin-top: 3px;
+            accent-color: #006C63;
+            width: 16px;
+            height: 16px;
+            cursor: pointer;
+        }
+
+        .confirmacao label {
+            color: #334155;
+            font-size: 14px;
+            line-height: 1.4;
+            cursor: pointer;
+            font-weight: 500;
+        }
+
+        /* Botões */
+        .acoes {
+            display: flex;
+            gap: 15px;
+        }
+
+        .botao {
+            flex: 1;
+            padding: 14px;
+            border-radius: 10px;
+            border: 1px solid transparent;
+            font-size: 15px;
+            font-weight: 600;
+            text-decoration: none;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .botao-cancelar {
+            background-color: #ffffff;
+            border-color: #cbd5e1;
+            color: #475569;
+        }
+
+        .botao-cancelar:hover {
+            background-color: #f1f5f9;
+            color: #0f172a;
+        }
+
+        .botao-excluir {
+            background-color: #ef4444;
+            color: #ffffff;
+            box-shadow: 0 4px 12px rgba(239, 68, 68, 0.2);
+        }
+
+        .botao-excluir:hover {
+            background-color: #dc2626;
+            transform: translateY(-2px);
+        }
+
+        .botao-excluir:active {
+            transform: scale(0.98);
+        }
+
+        /* Rodapé */
+        .rodape {
+            text-align: center;
+            color: #94a3b8;
+            font-size: 13px;
+            margin-top: 30px;
+        }
+
+        /* Modais e Overlays */
+        #sobreposicao-tela {
+            display: none;
+        }
+
+        @keyframes entradaSuaveModal {
+            0% { opacity: 0; transform: scale(0.85) translateY(20px); }
+            100% { opacity: 1; transform: scale(1) translateY(0); }
+        }
+
+        #cartao-informativo {
+            background: #fff;
+            padding: 35px 30px;
+            border-radius: 16px;
+            text-align: center;
+            max-width: 380px;
+            width: 90%;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+            animation: entradaSuaveModal 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        /* Responsividade */
+        @media (max-width: 600px) {
+            .cabecalho {
+                padding: 15px 20px;
+                text-align: center;
+            }
+
+            .logo {
+                margin: 0 auto;
+            }
+
+            .principal {
+                width: 94%;
+                margin: 20px auto;
+            }
+
+            .cartao {
+                padding: 25px 20px;
+            }
+
+            .acoes {
+                flex-direction: column-reverse;
+            }
+
+            .botao {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Overlay & Modais -->
+    <div id="sobreposicao-tela">
+        <div id="cartao-informativo">
+            <div id="result"></div>
+        </div>
+    </div>
+
+    <!-- Cabeçalho -->
+    <header class="cabecalho">
+        <img class="logo" src="img/Logo.png" alt="Logo FarmaSync">
+    </header>
+
+    <main class="principal">
+        <section class="cartao">
+
+            <div class="icone-alerta">
+                <i class="fa-solid fa-triangle-exclamation"></i>
+            </div>
+
+            <h1>Excluir sua conta?</h1>
+
+            <p class="subtitulo">
+                Sentimos muito que você esteja pensando em sair. Antes de continuar, confira o que acontecerá com sua conta.
+            </p>
+
+            <div class="aviso">
+                <h2>Esta ação é permanente</h2>
+                <p>
+                    A exclusão da conta removerá permanentemente seus dados pessoais e informações associadas ao seu cadastro. Essa ação não poderá ser desfeita.
+                </p>
+            </div>
+
+            <div class="consequencias">
+                <h2>O que poderá ser removido?</h2>
+                <ul>
+                    <li>Seus dados pessoais e informações de cadastro.</li>
+                    <li>Seu histórico de pedidos.</li>
+                    <li>Seus endereços salvos.</li>
+                    <li>Outras informações vinculadas à sua conta.</li>
+                </ul>
+            </div>
+
+            <div class="confirmacao">
+                <input type="checkbox" id="confirmar" required>
+                <label for="confirmar">
+                    Li as informações acima e entendo que a exclusão da minha conta poderá ser permanente.
+                </label>
+            </div>
+
+            <div class="acoes">
+                <a href="Conta_Do_Usuario.html" class="botao botao-cancelar">
+                    Voltar para minha conta
+                </a>
+
+                <button onclick="apagar(event)" id="apagar" class="botao botao-excluir">
+                    Excluir conta
+                </button>
+            </div>
+
+            <p class="rodape">
+                FarmaSync • Gerencie seus dados com segurança
+            </p>
+
+        </section>
+
+        <!-- Modal secundário de suporte se necessário -->
+        <div id="modal-apagar" style="display: none;">
+            <div id="caixa-alerta">
+                <div id="confirm"></div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Script Externo -->
+    <script src="apagar.js"></script>
+</body>
+
+</html>

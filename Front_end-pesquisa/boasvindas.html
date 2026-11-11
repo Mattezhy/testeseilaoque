@@ -1,0 +1,484 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Boas-Vindas - FarmaSync</title>
+    
+    <!-- Ícones e Fontes -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="icon" href="img/logo.png">
+
+    <style>
+        /* ==========================================================================
+           RESET & CONFIGURAÇÕES GLOBAIS
+           ========================================================================== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Roboto', sans-serif;
+        }
+
+        body {
+            background-color: #f4f6f8;
+            color: #1f2d2b;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        /* ==========================================================================
+           TOPO / CABEÇALHO
+           ========================================================================== */
+        .topo {
+            text-align: center;
+            margin-bottom: 25px;
+        }
+
+        #logo2 {
+            width: 70px;
+            height: 70px;
+            object-fit: contain;
+            border-radius: 50%;
+            background: white;
+            padding: 4px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.06);
+            margin-bottom: 12px;
+        }
+
+        .topo h1 {
+            color: #0f172a;
+            font-size: 26px;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        .topo .ajuda {
+            text-decoration: none;
+            color: #006C63;
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .topo .ajuda h3 {
+            font-size: 14px;
+            font-weight: 600;
+            display: inline;
+        }
+
+        .topo .ajuda:hover {
+            text-decoration: underline;
+        }
+
+        /* ==========================================================================
+           CARTÃO DE LOGIN
+           ========================================================================== */
+        .login {
+            background: #ffffff;
+            border: 1px solid #e2e8f0;
+            border-radius: 16px;
+            padding: 35px 30px;
+            max-width: 420px;
+            width: 100%;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+        }
+
+        .campo {
+            margin-bottom: 20px;
+            position: relative;
+        }
+
+        .campo h3 {
+            font-size: 14px;
+            font-weight: 600;
+            color: #475569;
+            margin-bottom: 6px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .campo i {
+            color: #006C63;
+        }
+
+        .login input[type="text"],
+        .login input[type="password"] {
+            width: 100%;
+            padding: 12px 16px;
+            border: 1px solid #cbd5e1;
+            border-radius: 10px;
+            background-color: #f8fafc;
+            color: #1e293b;
+            font-size: 15px;
+            outline: none;
+            transition: all 0.2s ease;
+        }
+
+        .login input:focus {
+            background-color: #ffffff;
+            border-color: #006C63;
+            box-shadow: 0 0 0 3px rgba(0, 108, 99, 0.12);
+        }
+
+        .login p {
+            font-size: 13px;
+            color: #64748b;
+            margin-top: 15px;
+            margin-bottom: 6px;
+        }
+
+        /* Botão Entrar */
+        .btn-entrar {
+            width: 100%;
+            background-color: #006C63;
+            color: white;
+            border: none;
+            border-radius: 10px;
+            padding: 14px;
+            font-size: 16px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            margin-top: 20px;
+            box-shadow: 0 4px 12px rgba(0, 108, 99, 0.2);
+        }
+
+        .btn-entrar:hover {
+            background-color: #00564f;
+            transform: translateY(-2px);
+        }
+
+        .btn-entrar:active {
+            transform: scale(0.98);
+        }
+
+        /* Links auxiliares */
+        .esqueceu {
+            display: block;
+            text-align: center;
+            margin-top: 16px;
+            text-decoration: none;
+        }
+
+        .esqueceu h3 {
+            font-size: 14px;
+            color: #006C63;
+            font-weight: 600;
+        }
+
+        .esqueceu:hover h3 {
+            text-decoration: underline;
+        }
+
+        /* Botoes inferiores */
+        .botoes-inferiores {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 25px;
+            padding-top: 20px;
+            border-top: 1px solid #f1f5f9;
+        }
+
+        .botoes-inferiores a {
+            text-decoration: none;
+        }
+
+        .botoes-inferiores h3 {
+            font-size: 13px;
+            color: #64748b;
+            font-weight: 600;
+            transition: color 0.2s;
+        }
+
+        .botoes-inferiores a:hover h3 {
+            color: #006C63;
+        }
+
+        /* ==========================================================================
+           MODAL E OVERLAY (ALERTA)
+           ========================================================================== */
+        #sobreposicao-tela {
+            display: none;
+        }
+
+        @keyframes entradaSuaveModal {
+            0% { opacity: 0; transform: scale(0.85) translateY(20px); }
+            100% { opacity: 1; transform: scale(1) translateY(0); }
+        }
+
+        #cartao-informativo {
+            background: #fff;
+            padding: 35px 30px;
+            border-radius: 16px;
+            text-align: center;
+            max-width: 380px;
+            width: 90%;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+            animation: entradaSuaveModal 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        #error {
+            color: #ef4444;
+            font-size: 32px;
+            font-weight: bold;
+        }
+
+        #certo {
+            color: #16a34a;
+            font-size: 32px;
+            font-weight: bold;
+        }
+
+        #result p {
+            color: #475569;
+            font-size: 14px;
+            margin: 10px 0;
+            line-height: 1.5;
+        }
+
+        #result h3 {
+            color: #0f172a !important;
+            font-size: 18px;
+            margin: 10px 0;
+        }
+
+        #btns {
+            background-color: #006C63;
+            color: white;
+            border: none;
+            padding: 10px 24px;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            margin-top: 10px;
+            transition: background 0.2s;
+        }
+
+        #btns:hover {
+            background-color: #00564f;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Overlay e Modal de Alerta / Sucesso -->
+    <div id="sobreposicao-tela">
+        <div id="cartao-informativo">
+            <div id="result"></div>
+        </div>
+    </div>
+
+    <!-- Cabeçalho -->
+    <header class="topo">
+        <img src="img/logo.png" id="logo2" alt="Logo FarmaSync">
+        <h1>Boas-Vindas!</h1>
+        <a href="index.html" class="ajuda">
+            <h3>Voltar para a tela inicial</h3>
+        </a>
+    </header>
+
+    <!-- Formulário de Login -->
+    <div class="login">
+        <form id="form-login">
+
+            <div class="campo">
+                <h3><i class="fa-solid fa-envelope"></i> E-mail:</h3>
+                <input type="text" id="email" name="emailUsuario" placeholder="Digite seu e-mail" required>
+            </div>
+
+            <div class="campo">
+                <h3><i class="fa-solid fa-lock"></i> Senha:</h3>
+                <input type="password" id="senha" name="senhaUsuario" placeholder="Digite sua senha" required>
+            </div>
+
+            <p>Não lembra a senha? Tente usando seu CPF:</p>
+            <input type="text" id="cpf" name="cpf" placeholder="Digite seu CPF">
+
+            <button type="submit" class="btn-entrar" id="entrar-btn">Entrar</button>
+        </form>
+
+        <a href="esqueceuasenha.html" class="esqueceu">
+            <h3>Esqueceu a senha?</h3>
+        </a>
+
+        <!-- Links Inferiores -->
+        <div class="botoes-inferiores">
+            <a href="faleconosco.html">
+                <h3>Fale Conosco</h3>
+            </a>
+            <a href="cadastro.html">
+                <h3>Cadastre-se</h3>
+            </a>
+            <a href="ajuda.html">
+                <h3>Ajuda?</h3>
+            </a>
+        </div>
+    </div>
+
+    <!-- Script de Autenticação e Modais -->
+    <script>
+        const form = document.getElementById('form-login');
+
+        form.addEventListener('submit', async (event) => {
+            event.preventDefault(); // Evita o envio padrão do formulário
+
+            const email = document.getElementById('email').value.trim();
+            const senha = document.getElementById('senha').value.trim();
+            const cpf = document.getElementById('cpf').value.trim();
+
+            if (!email && !cpf) {
+                const msg = document.getElementById("result");
+                const cartaoinformativo = document.getElementById("cartao-informativo");
+                const sobreposicaotela = document.getElementById("sobreposicao-tela");
+
+                msg.innerHTML = `<span id="error">&#10006;</span><br><p>Por favor, preencha o e-mail ou CPF para continuar.</p><br><button id="btns" onclick="fecharModal()">OK</button>`;
+
+                cartaoinformativo.style.background = "#fff";
+                cartaoinformativo.style.padding = "40px";
+                cartaoinformativo.style.borderRadius = "20px";
+                cartaoinformativo.style.textAlign = "center";
+                cartaoinformativo.style.maxWidth = "380px";
+                cartaoinformativo.style.width = "90%";
+                cartaoinformativo.style.boxShadow = "0 15px 30px rgba(0,0,0,0.3)";
+                
+                sobreposicaotela.style.position = "fixed";
+                sobreposicaotela.style.top = "0";
+                sobreposicaotela.style.left = "0";
+                sobreposicaotela.style.width = "100%";
+                sobreposicaotela.style.height = "100%";
+                sobreposicaotela.style.background = "rgba(0,0,0,0.7)";
+                sobreposicaotela.style.display = "flex";
+                sobreposicaotela.style.justifyContent = "center";
+                sobreposicaotela.style.alignItems = "center";
+                sobreposicaotela.style.zIndex = "9999";
+                sobreposicaotela.style.backdropFilter = "blur(5px)";
+                sobreposicaotela.style.display = "flex";
+
+                return;
+            }
+
+            if (!senha) {
+                const msg = document.getElementById("result");
+                const cartaoinformativo = document.getElementById("cartao-informativo");
+                const sobreposicaotela = document.getElementById("sobreposicao-tela");
+
+                msg.innerHTML = `<span id="error">&#10006;</span><br><p>Por favor, preencha a senha para continuar.</p><br><button id="btns" onclick="fecharModal()">OK</button>`;
+
+                sobreposicaotela.style.position = "fixed";
+                sobreposicaotela.style.top = "0";
+                sobreposicaotela.style.left = "0";
+                sobreposicaotela.style.width = "100%";
+                sobreposicaotela.style.height = "100%";
+                sobreposicaotela.style.background = "rgba(0,0,0,0.7)";
+                sobreposicaotela.style.display = "flex";
+                sobreposicaotela.style.justifyContent = "center";
+                sobreposicaotela.style.alignItems = "center";
+                sobreposicaotela.style.zIndex = "9999";
+                sobreposicaotela.style.backdropFilter = "blur(5px)";
+
+                return;
+            }
+
+            const dadosLogin = {
+                senhaUsuario: senha
+            };
+
+            if (email) {
+                dadosLogin.emailUsuario = email;
+            } else if (cpf) {
+                dadosLogin.cpf = cpf;
+            }
+
+            try {
+                const response = await fetch('http://localhost:8082/usuarios/login', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(dadosLogin)
+                }); 
+
+                const msg = document.getElementById("result");
+                const cartaoinformativo = document.getElementById("cartao-informativo");
+                const sobreposicaotela = document.getElementById("sobreposicao-tela");
+
+                if (response.ok) {
+                    const usuario = await response.json();
+                    const usuarioId = usuario.usuarioId;
+                    console.log('ESTE É O OBJETO QUE O JAVA MANDOU:', usuario);
+
+                    localStorage.setItem('usuarioLogado', 'true');
+                    localStorage.setItem('usuarioId', usuarioId);
+                    localStorage.setItem('nomedoUsuario', usuario.nomeUsuario);
+                    localStorage.setItem('emailUsuario', usuario.emailUsuario);
+                    localStorage.setItem('cpf', usuario.cpf);
+                            
+                    msg.innerHTML = `<span id="certo">✔</span><br><h3>Login efetuado com sucesso!</h3><br><button id="btns" onclick="window.location.href='index.html'">Entrar</button>`;
+
+                    sobreposicaotela.style.position = "fixed";
+                    sobreposicaotela.style.top = "0";
+                    sobreposicaotela.style.left = "0";
+                    sobreposicaotela.style.width = "100%";
+                    sobreposicaotela.style.height = "100%";
+                    sobreposicaotela.style.background = "rgba(0,0,0,0.7)";
+                    sobreposicaotela.style.display = "flex";
+                    sobreposicaotela.style.justifyContent = "center";
+                    sobreposicaotela.style.alignItems = "center";
+                    sobreposicaotela.style.zIndex = "9999";
+                    sobreposicaotela.style.backdropFilter = "blur(5px)";
+                } else {
+                    const errorText = await response.text();
+                    console.error('Erro no login:', errorText);
+                    
+                    msg.innerHTML = `<span id="error">&#10006;</span><br><p>Falha no login: ${errorText || 'Verifique suas credenciais.'}</p><br><button id="btns" onclick="fecharModal()">OK</button>`; 
+
+                    sobreposicaotela.style.position = "fixed";
+                    sobreposicaotela.style.top = "0";
+                    sobreposicaotela.style.left = "0";
+                    sobreposicaotela.style.width = "100%";
+                    sobreposicaotela.style.height = "100%";
+                    sobreposicaotela.style.background = "rgba(0,0,0,0.7)";
+                    sobreposicaotela.style.display = "flex";
+                    sobreposicaotela.style.justifyContent = "center";
+                    sobreposicaotela.style.alignItems = "center";
+                    sobreposicaotela.style.zIndex = "9999";
+                    sobreposicaotela.style.backdropFilter = "blur(5px)";
+                } 
+            } catch (error) {
+                const msg = document.getElementById("result");
+                const sobreposicaotela = document.getElementById("sobreposicao-tela");
+
+                console.error('Erro na requisição:', error);
+
+                msg.innerHTML = `<span id="error">&#10006;</span><br><p>Ocorreu um erro ao tentar fazer login. Tente novamente mais tarde.</p><br><button id="btns" onclick="fecharModal()">OK</button>`;
+
+                sobreposicaotela.style.position = "fixed";
+                sobreposicaotela.style.top = "0";
+                sobreposicaotela.style.left = "0";
+                sobreposicaotela.style.width = "100%";
+                sobreposicaotela.style.height = "100%";
+                sobreposicaotela.style.background = "rgba(0,0,0,0.7)";
+                sobreposicaotela.style.display = "flex";
+                sobreposicaotela.style.justifyContent = "center";
+                sobreposicaotela.style.alignItems = "center";
+                sobreposicaotela.style.zIndex = "9999";
+                sobreposicaotela.style.backdropFilter = "blur(5px)";
+            }
+        });
+
+        function fecharModal() {
+            const sobreposicaotela = document.getElementById("sobreposicao-tela");
+            sobreposicaotela.style.display = "none";
+        }
+    </script>
+</body>
+</html>

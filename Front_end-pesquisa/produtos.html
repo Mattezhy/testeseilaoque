@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FarmaSync - Produtos</title>
+<link rel="icon" href="img/logo.png">
+<style>
+*{box-sizing:border-box}
+body{margin:0;background:#f6f7f9;font-family:'Segoe UI', Inter, sans-serif;display:flex;flex-direction:column;align-items:center}
+
+
+.btn-voltar-home{
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  background:#fff;
+ 
+  padding:8px 14px;
+ 
+  text-decoration:none;
+  color:#1f8f5f;
+  font-weight:700;
+  font-size:13px;
+  transition:.2s;
+  box-shadow:0 2px 8px rgba(0,0,0,0.04);
+}
+.btn-voltar-home:hover{
+  background:#1f8f5f;
+  color:#fff;
+  border-color:#1f8f5f;
+  transform:translateY(-1px);
+  box-shadow:0 6px 16px rgba(31,143,95,0.25);
+}
+
+
+/* HEADER PREMIUM */
+#elements{
+  position:sticky; top:0; z-index:1000;
+  width:100%; background:#fff;
+  display:flex; justify-content:center;
+  box-shadow:0 4px 24px rgba(0,0,0,0.06);
+  border-bottom:3px solid #1f8f5f;
+}
+.header-inner{
+  width:100%; max-width:1120px;
+  padding:12px 24px;
+  display:flex; align-items:center; justify-content:space-between; gap:24px;
+}
+#logo{width:125px;height:auto;object-fit:contain}
+#pesquisa{
+  flex:1; max-width:480px; height:44px;
+  background:#f2f4f7; border-radius:12px;
+  display:flex; align-items:center; padding:0 6px 0 16px;
+  border:1px solid transparent; transition:.2s;
+}
+#pesquisa:focus-within{background:#fff;border-color:#1f8f5f;box-shadow:0 0 0 4px rgba(31,143,95,0.12)}
+#input-busca{border:none;background:transparent;flex:1;outline:none;padding:8px;font-size:14px}
+.btn-lupa{width:36px;height:36px;border:none;background:#1f8f5f;color:#fff;border-radius:9px;cursor:pointer;display:grid;place-items:center;font-size:18px}
+#atalhos{display:flex;align-items:center;gap:14px}
+#link-carrinho{
+  position:relative; display:flex;align-items:center;gap:8px;
+  background:#f2f4f7;padding:10px 14px;border-radius:11px;
+  text-decoration:none;color:#222;font-weight:700;font-size:13px;transition:.2s
+}
+#link-carrinho:hover{background:#e9ecef;transform:translateY(-1px)}
+#contador-carrinho{
+  background:#ff3b30;color:#fff;min-width:20px;height:20px;
+  border-radius:20px;display:grid;place-items:center;
+  font-size:11px;font-weight:800;padding:0 6px;
+}
+#Link-perfil{
+  display:flex !important;align-items:center;gap:10px;
+  background:#fff;border:1px solid #e5e7eb;padding:5px 12px 5px 5px;
+  border-radius:999px;text-decoration:none;transition:.2s
+}
+#Link-perfil:hover{border-color:#1f8f5f;box-shadow:0 4px 12px rgba(0,0,0,0.06)}
+.avatar{
+  width:32px;height:32px;background:linear-gradient(135deg,#1f8f5f,#2ecc71);
+  color:#fff;border-radius:50%;display:grid;place-items:center;font-weight:800;font-size:13px;text-transform:uppercase
+}
+#topi{display:block !important;font-size:13px !important;font-weight:700 !important;color:#111 !important;margin:0;max-width:100px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+
+/* CONTEUDO */
+main{width:100%;max-width:1050px;padding:32px 20px}
+main h1{margin:0 0 16px 4px;font-size:26px;font-weight:800;letter-spacing:-0.5px}
+#categorias{display:flex;gap:10px;margin:0 0 24px 4px;flex-wrap:wrap}
+.btn-filtro{background:#fff;border:1px solid #ddd;padding:8px 16px;border-radius:999px;cursor:pointer;font-weight:600;font-size:13px;transition:.2s}
+input[name="filtro"]{display:none}
+input#todos:checked ~ main label[for="todos"], input#medicamentos:checked ~ main label[for="medicamentos"], input#higiene:checked ~ main label[for="higiene"], input#vitaminas:checked ~ main label[for="vitaminas"]{background:#1f8f5f;color:#fff;border-color:#1f8f5f;box-shadow:0 4px 10px rgba(31,143,95,0.25)}
+
+#catalogo-produtos{width:100%;display:flex;flex-direction:column;gap:22px;align-items:center}
+.container-produtos{width:100%;display:grid;grid-template-columns:repeat(4,1fr);gap:18px}
+.produto{background:#fff;border-radius:16px;padding:16px;border:1px solid #eee;display:flex;flex-direction:column;box-shadow:0 2px 10px rgba(0,0,0,0.03);transition:.2s;min-height:270px}
+.produto:hover{transform:translateY(-4px);box-shadow:0 12px 24px rgba(0,0,0,0.07)}
+.produto img{width:100% !important;height:120px !important;object-fit:contain !important;background:#fff;margin-bottom:8px}
+.produto-title{font-size:12.8px;font-weight:600;min-height:32px;color:#222;line-height:1.3}
+.produto p{margin:10px 0 0 0}
+.produto p strong{color:#1f8f5f;font-size:15px}
+.btn{background:#007bff;color:#fff !important;border:none;padding:10px;border-radius:9px;cursor:pointer;font-weight:700;font-size:12px;margin-top:auto;width:100%;transition:.2s}
+.btn:hover{filter:brightness(1.05)}
+.btn.adicionado{background:#1f8f5f !important}
+#sobreposicao-tela{display:none}
+@media(max-width:1000px){.container-produtos{grid-template-columns:repeat(3,1fr)}}
+@media(max-width:700px){.container-produtos{grid-template-columns:repeat(2,1fr)} .header-inner{padding:10px 14px} #pesquisa{max-width:200px} #topi{display:none !important}}
+</style>
+</head>
+<body>
+
+
+
+<div id="sobreposicao-tela"><div id="cartao-informativo"><div id="result"></div></div></div>
+
+<nav id="elements">
+    
+<a href="index.html" class="btn-voltar-home">← Voltar para Home</a>
+  <div class="header-inner">
+    <img src="img/logo.png" id="logo" alt="FarmaSync">
+    <div id="pesquisa">
+      <input type="text" id="input-busca" placeholder="O que você procura hoje?">
+      <button class="btn-lupa">⌕</button>
+    </div>
+    <div id="atalhos">
+      <a href="carrinho.html" id="link-carrinho">🛒 Carrinho <span id="contador-carrinho">0</span></a>
+      <a id="Link-perfil" href="cadastro.html">
+        <div class="avatar" id="avatar-letra">E</div>
+        <h3 id="topi">Entrar</h3>
+      </a>
+    </div>
+  </div>
+</nav>
+
+<input type="radio" name="filtro" id="todos" checked>
+<input type="radio" name="filtro" id="medicamentos">
+<input type="radio" name="filtro" id="higiene">
+<input type="radio" name="filtro" id="vitaminas">
+
+<main>
+<h1>Produtos</h1>
+<div id="categorias">
+<label for="todos" class="btn-filtro">Todos</label>
+<label for="medicamentos" class="btn-filtro">Medicamentos</label>
+<label for="higiene" class="btn-filtro">Higiene</label>
+<label for="vitaminas" class="btn-filtro">Vitaminas</label>
+</div>
+<section id="catalogo-produtos"></section>
+</main>
+
+<script src="busca.js"></script>
+<script>
+
+const API_URL = 'http://localhost:8082';
+
+
+const CATEGORIAS_DO_FILTRO = {
+  medicamentos: [1],
+  vitaminas: [2],
+  higiene: [3, 4, 5]
+};
+
+const catalogoContainer = document.getElementById('catalogo-produtos');
+const campoBusca = document.getElementById('input-busca');
+const botaoLupa = document.querySelector('.btn-lupa');
+
+let produtosEncontrados = [];
+let categoriaAtual = "todos";
+let buscaAtual = (new URLSearchParams(window.location.search).get('busca') || "").trim();
+let temporizador = null;
+let numeroDaRequisicao = 0;
+
+
+function normalizar(texto){
+  return String(texto == null ? '' : texto).normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase();
+}
+
+function escapar(texto){
+  const d = document.createElement('div');
+  d.textContent = texto == null ? '' : String(texto);
+  return d.innerHTML;
+}
+
+
+function converterProduto(p){
+  return {
+    id_produto: p.produtosId ?? p.idProduto ?? p.id_produto ?? p.id,
+    nome: p.nome ?? '',
+    preco: Number(p.preco),
+    imagem: p.imagem || '',
+    categoriaId: p.categoriaId ?? p.categoria_id ?? null
+  };
+}
+
+function mostrarMensagem(texto){
+  catalogoContainer.innerHTML = "";
+  const p = document.createElement('p');
+  p.style.padding = '20px';
+  p.textContent = texto;
+  catalogoContainer.appendChild(p);
+}
+
+
+async function buscarProdutos(){
+  const minhaRequisicao = ++numeroDaRequisicao;
+  mostrarMensagem('Buscando produtos...');
+  try{
+    const resposta = await fetch(`${API_URL}/produtos?busca=${encodeURIComponent(buscaAtual)}`);
+    if(!resposta.ok) throw new Error('Status ' + resposta.status);
+    const dados = await resposta.json();
+    if(minhaRequisicao !== numeroDaRequisicao) return; 
+    produtosEncontrados = dados.map(converterProduto);
+    renderizar();
+  }catch(erro){
+    if(minhaRequisicao !== numeroDaRequisicao) return;
+    console.error('Erro ao buscar produtos:', erro);
+    produtosEncontrados = [];
+    mostrarMensagem(`Não foi possível carregar os produtos. Verifique se o back-end está rodando em ${API_URL}.`);
+  }
+}
+
+function renderizar(){
+  const idsDaCategoria = CATEGORIAS_DO_FILTRO[categoriaAtual]; 
+  const filtrados = produtosEncontrados.filter(p => !idsDaCategoria || idsDaCategoria.includes(Number(p.categoriaId)));
+
+  if(filtrados.length === 0){
+    if(produtosEncontrados.length > 0) mostrarMensagem('Nenhum resultado nesta categoria. Tente outra categoria ou "Todos".');
+    else if(buscaAtual) mostrarMensagem(`Nenhum produto encontrado para "${buscaAtual}".`);
+    else mostrarMensagem('Nenhum produto cadastrado.');
+    return;
+  }
+
+  catalogoContainer.innerHTML = "";
+
+ 
+  if(buscaAtual && !produtosEncontrados.some(p => normalizar(p.nome).includes(normalizar(buscaAtual)))){
+    const aviso = document.createElement('p');
+    aviso.style.padding = '10px 20px';
+    aviso.textContent = `Não encontramos "${buscaAtual}" exatamente. Mostrando resultados parecidos:`;
+    catalogoContainer.appendChild(aviso);
+  }
+
+  for(let i = 0; i < filtrados.length; i += 4){
+    const container = document.createElement('div');
+    container.className = 'container-produtos';
+    filtrados.slice(i, i + 4).forEach(linha => {
+      const div = document.createElement('div');
+      div.className = 'produto';
+
+      const img = document.createElement('img');
+      img.loading = 'lazy';
+      img.alt = linha.nome;
+      img.onerror = function(){ this.onerror = null; this.src = 'img/logo.png'; };
+      img.src = linha.imagem ? 'produtos/' + linha.imagem : 'img/logo.png';
+
+      const titulo = document.createElement('h3');
+      titulo.className = 'produto-title';
+      titulo.textContent = linha.nome;
+
+      const p = document.createElement('p');
+      const strong = document.createElement('strong');
+      strong.textContent = Number(linha.preco).toLocaleString('pt-BR', {style:'currency', currency:'BRL'});
+      p.appendChild(strong);
+
+      const botao = document.createElement('button');
+      botao.className = 'btn';
+      botao.textContent = 'Adicionar ao carrinho';
+      botao.addEventListener('click', () => adicionarAoCarrinho(linha.id_produto, botao));
+
+      div.append(img, titulo, p, botao);
+      container.appendChild(div);
+    });
+    catalogoContainer.appendChild(container);
+  }
+}
+
+function atualizarContador(){
+  const c = JSON.parse(localStorage.getItem('carrinho')) || [];
+  document.getElementById('contador-carrinho').textContent = c.reduce((a, i) => a + (i.Quantidade ?? i.quantidade ?? 0), 0);
+}
+
+function adicionarAoCarrinho(id, btn){
+  const prod = produtosEncontrados.find(p => p.id_produto === id);
+  if(!prod) return;
+  let carrinho = JSON.parse(localStorage.getItem('carrinho')) || [];
+  const item = carrinho.find(i => i.id_produto === id);
+  // "Quantidade" com Q maiúsculo é o nome que carrinho.js e formularioDeCompra.html esperam
+  if(item) item.Quantidade = (item.Quantidade ?? item.quantidade ?? 0) + 1;
+  else carrinho.push({ id_produto: prod.id_produto, nome: prod.nome, preco: prod.preco, imagem: prod.imagem, Quantidade: 1 });
+  localStorage.setItem('carrinho', JSON.stringify(carrinho));
+  atualizarContador();
+  if(btn){ btn.innerText = "Adicionado ✓"; btn.classList.add("adicionado"); setTimeout(() => { btn.innerText = "Adicionar ao carrinho"; btn.classList.remove("adicionado"); }, 1000); }
+  const r = document.getElementById("result"), ci = document.getElementById("cartao-informativo"), st = document.getElementById("sobreposicao-tela");
+  r.innerHTML = `<h3>${escapar(prod.nome)}</h3><p>foi adicionado!</p><br><button onclick="fecharMensagem()" style="background:#1f8f5f;color:white;padding:10px 20px;border-radius:10px;border:none;font-weight:bold;cursor:pointer">Ok</button>`;
+  ci.style.background = "#fff"; ci.style.padding = "30px"; ci.style.borderRadius = "16px"; ci.style.textAlign = "center"; ci.style.maxWidth = "320px"; ci.style.width = "90%"; ci.style.boxShadow = "0 20px 40px rgba(0,0,0,0.15)";
+  st.style.display = "flex"; st.style.position = "fixed"; st.style.top = "0"; st.style.left = "0"; st.style.width = "100%"; st.style.height = "100%"; st.style.background = "rgba(0,0,0,0.5)"; st.style.backdropFilter = "blur(4px)"; st.style.justifyContent = "center"; st.style.alignItems = "center"; st.style.zIndex = "9999";
+}
+function fecharMensagem(){ document.getElementById('sobreposicao-tela').style.display = 'none'; }
+
+
+document.querySelectorAll('input[name="filtro"]').forEach(radio => {
+  radio.addEventListener('change', e => { categoriaAtual = e.target.id; renderizar(); });
+});
+
+
+function pesquisar(texto){
+  buscaAtual = String(texto || '').trim();
+  buscarProdutos();
+}
+
+
+if(window.FarmaBusca){
+  FarmaBusca.iniciar({
+    campo: campoBusca,
+    lupa: botaoLupa,
+    aoPesquisar: pesquisar,
+    aoEscolher: function(produto){ pesquisar(produto.nome); }
+  });
+}else{
+  campoBusca.addEventListener('keydown', e => { if(e.key === 'Enter') pesquisar(campoBusca.value); });
+  botaoLupa.addEventListener('click', () => pesquisar(campoBusca.value));
+}
+
+
+(function(){
+  const topiEl = document.getElementById('topi'), avatarEl = document.getElementById('avatar-letra'), linkPerfil = document.getElementById('Link-perfil');
+  const nomeLocal = localStorage.getItem('nomedoUsuario') || localStorage.getItem('nomeUsuario') || "";
+  if(localStorage.getItem('usuarioLogado') === 'true' && nomeLocal){
+    topiEl.textContent = nomeLocal;
+    avatarEl.textContent = nomeLocal.charAt(0).toUpperCase();
+    linkPerfil.href = "Conta_Do_Usuario.html";
+  }
+  campoBusca.value = buscaAtual;   
+  atualizarContador();
+  buscarProdutos();
+})();
+</script>
+</body>
+</html>
